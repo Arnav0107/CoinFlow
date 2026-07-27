@@ -17,4 +17,11 @@ ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY", "")
 ETHERSCAN_API_URL = "https://api.etherscan.io/api"
 
 # ============ CORS ============
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+raw_origins = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+FRONTEND_ORIGINS = [
+    origin.strip().rstrip("/")
+    for origin in raw_origins.split(",")
+    if origin.strip()
+]
+if "http://localhost:5173" not in FRONTEND_ORIGINS:
+    FRONTEND_ORIGINS.append("http://localhost:5173")
